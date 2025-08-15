@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Details</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<div class="bg-[rgba(0,0,0,0.6)] shadow p-5 md:p-10 flex items-center justify-between">
+    <a href="SaifWishesGallery.html" class="text-white font-bold text-[17px] md:text-[25px]">⬅ Back</a>
+    <h1 class=" font-bold text-[22px] md:text-[32px] text-white">My Shop</h1>
+</div>
+
+<!-- Full Screen Product Section -->
+<div class="flex flex-col md:flex-row w-full min-h-screen bg-white pt-[29px]">
+
+    <!-- Left: Image Gallery -->
+    <div class="w-full md:w-1/2 p-6 flex flex-col items-center border-r">
+        <img id="mainImage" src="" alt="" class="max-h-[400px] object-contain">
+        <div id="thumbnailContainer" class="mt-4 flex flex-wrap gap-2 justify-center"></div>
+    </div>
+
+    <!-- Right: Product Details -->
+    <div class="w-full md:w-1/2 p-6 flex flex-col">
+        <h2 id="productTitle" class="text-3xl font-bold mb-2"></h2>
+       
+        <p id="productprice" class="text-2xl text-green-600 font-semibold mb-3"></p>
+
+         <div class="pb-[12px]"> <a href="https://saifkhan-02.github.io/SaifWishesGallery/"  class="underline hover:text-indigo-700 ">Click here to view the site</a></div>
+
+        <p id="productDesc" class="text-gray-700 mb-4"></p>
+
+        <!-- Features -->
+        <ul id="productFeatures" class="list-disc pl-5 mb-6 text-gray-600"></ul>
+
+        <!-- Action Buttons -->
+        <div class="flex  justify-center gap-[62px] sm:gap-[80px] mt-[12px] sm:mt-[30px]">
+            <button class="bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded font-bold">Add to Cart</button>
+            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded font-bold">Buy Now</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const products = [
+    {
+        id: 1,
+        title: "Classic Birthday Wish",
+        price: "₹149",
+        description: "A beautiful and elegant birthday wish card to make your loved ones feel special.",
+        features: [
+            "High-quality print design",
+            "Durable and long-lasting material",
+            "Perfect for all ages",
+            "Eco-friendly paper",
+            "Replace these Bear images with you and your images ",
+            "Provide Coustomize Code also"
+        ],
+        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
+    }
+];
+
+// Get ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const productId = parseInt(urlParams.get('id'));
+const product = products.find(p => p.id === productId);
+
+if (product) {
+    document.getElementById("productTitle").innerText = product.title;
+    document.getElementById("productprice").innerText = product.price;
+    document.getElementById("productDesc").innerText = product.description;
+    document.getElementById("mainImage").src = product.images[0];
+    document.getElementById("productFeatures").innerHTML =
+        product.features.map(f => `<li>${f}</li>`).join("");
+
+    let thumbs = '';
+    product.images.forEach(img => {
+        thumbs += `<img src="${img}" onclick="changeImage('${img}')" class="w-20 h-20 border cursor-pointer object-cover">`;
+    });
+    document.getElementById("thumbnailContainer").innerHTML = thumbs;
+}
+
+function changeImage(img) {
+    document.getElementById("mainImage").src = img;
+}
+</script>
+
+</body>
+</html>

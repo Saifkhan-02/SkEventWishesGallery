@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+  <header class="bg-gradient-to-r from-purple-600 to-indigo-600 p-5 md:p-6 flex items-center justify-between shadow">
+    <a href="index.html" class="text-white font-semibold text-lg">⬅ Back</a>
+    <h1 class="text-white text-2xl font-bold">Secure Checkout</h1>
+  </header>
+
+  <!-- Main Container -->
+  <div class="max-w-5xl mx-auto mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- Left Section (Payment Options) -->
+    <div class="lg:col-span-2 bg-white shadow-md rounded-xl p-6">
+      <h2 class="text-xl font-bold text-gray-700 mb-5">Choose Payment Method</h2>
+
+      <!-- UPI -->
+      <div class="mb-5 border rounded-lg p-5 hover:shadow-md transition">
+        <label class="flex items-center gap-2 mb-3 font-semibold text-gray-700">
+          <input type="radio" name="payment" checked> UPI Payment
+        </label>
+        <input type="text" placeholder="Enter UPI ID (example@upi)" class="w-full border p-3 rounded mb-3">
+        <button class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded w-full">Pay with UPI</button>
+      </div>
+
+      <!-- Net Banking -->
+      <div class="mb-5 border rounded-lg p-5 hover:shadow-md transition">
+        <label class="flex items-center gap-2 mb-3 font-semibold text-gray-700">
+          <input type="radio" name="payment"> Net Banking
+        </label>
+        <select class="w-full border p-3 rounded mb-3">
+          <option>Select Bank</option>
+          <option>State Bank of India</option>
+          <option>HDFC Bank</option>
+          <option>ICICI Bank</option>
+          <option>Axis Bank</option>
+        </select>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded w-full">Proceed</button>
+      </div>
+
+      <!-- Card Payment -->
+      <div class="mb-5 border rounded-lg p-5 hover:shadow-md transition">
+        <label class="flex items-center gap-2 mb-3 font-semibold text-gray-700">
+          <input type="radio" name="payment"> Debit / Credit Card
+        </label>
+        <input type="text" placeholder="Card Number" class="w-full border p-3 rounded mb-2">
+        <div class="flex gap-2">
+          <input type="text" placeholder="MM/YY" class="w-1/2 border p-3 rounded mb-2">
+          <input type="text" placeholder="CVV" class="w-1/2 border p-3 rounded mb-2">
+        </div>
+        <input type="text" placeholder="Card Holder Name" class="w-full border p-3 rounded mb-3">
+        <button class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded w-full">Pay Now</button>
+      </div>
+
+      <!-- Wallets -->
+      <div class="border rounded-lg p-5 hover:shadow-md transition">
+        <label class="flex items-center gap-2 mb-3 font-semibold text-gray-700">
+          <input type="radio" name="payment"> Wallets
+        </label>
+        <div class="flex flex-wrap gap-3">
+          <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded">Paytm</button>
+          <button class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-2 rounded">PhonePe</button>
+          <button class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded">Amazon Pay</button>
+          <button class="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded">Google Pay</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section (Order Summary) -->
+    <div class="bg-white shadow-md rounded-xl p-6">
+      <h2 class="text-xl font-bold text-gray-700 mb-5">🛒 Order Summary</h2>
+      <div class="flex justify-between mb-2 text-gray-600">
+        <span>Product</span>
+        <span id="summaryTitle">Special Gift</span>
+      </div>
+      <div class="flex justify-between mb-2 text-gray-600">
+        <span>Price</span>
+        <span id="summaryPrice">₹199</span>
+      </div>
+      <div class="flex justify-between mb-2 text-gray-600">
+        <span>Discount</span>
+        <span class="text-green-600">-₹50</span>
+      </div>
+      <div class="flex justify-between font-bold text-lg mt-3 border-t pt-3">
+        <span>Total</span>
+        <span id="summaryTotal">₹149</span>
+      </div>
+      <button class="mt-5 w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white px-5 py-3 rounded font-semibold">Confirm & Pay</button>
+    </div>
+  </div>
+
+  <script>
+    // Example: setting order summary dynamically
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title') || "Special Gift";
+    const price = urlParams.get('price') || "₹199";
+    document.getElementById("summaryTitle").innerText = title;
+    document.getElementById("summaryPrice").innerText = price;
+
+    const numericPrice = parseInt(price.replace("₹",""));
+    const total = numericPrice - 20; 
+    document.getElementById("summaryTotal").innerText = "₹" + total;
+  </script>
+
+</body>
+</html>

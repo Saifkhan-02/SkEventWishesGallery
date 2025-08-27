@@ -27,9 +27,11 @@
     <div class="w-full md:w-1/2 p-6 flex flex-col">
         <h2 id="productTitle" class="text-3xl font-bold mb-2"></h2>
        
-        <p id="productprice" class="text-2xl text-green-600 font-semibold mb-3"></p>
-
-         <div class="pb-[12px]"> <a href="https://saifkhan-02.github.io/SaifWishesGallery/"  class="underline hover:text-indigo-700 ">Click here to view the site</a></div>
+        <!-- ✅ Price with discount -->
+        <div id="productprice" class="flex items-center gap-3 mb-3">
+            <span id="newPrice" class="text-2xl text-green-600 font-semibold"></span>
+            <span id="oldPrice" class="text-lg text-gray-500 line-through"></span>
+        </div>
 
         <p id="productDesc" class="text-gray-700 mb-4"></p>
 
@@ -37,9 +39,9 @@
         <ul id="productFeatures" class="list-disc pl-5 mb-6 text-gray-600"></ul>
 
         <!-- Action Buttons -->
-        <div class="flex  justify-center gap-[62px] sm:gap-[80px] mt-[12px] sm:mt-[30px]">
+        <div class="flex justify-center gap-[62px] sm:gap-[80px] mt-[12px] sm:mt-[30px]">
             <button class="bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded font-bold">Add to Cart</button>
-            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded font-bold">Buy Now</button>
+            <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded font-bold"><a href="PaymentPage.html">Buy Now</a></button>
         </div>
     </div>
 
@@ -51,6 +53,7 @@ const products = [
         id: 1,
         title: "Classic Birthday Wish",
         price: "₹149",
+        oldPrice: "₹299",   // ✅ added old price
         description: "A beautiful and elegant birthday wish card to make your loved ones feel special.",
         features: [
             "High-quality print design",
@@ -66,22 +69,25 @@ const products = [
         id: 2,
         title: "Anniversery Wish",
         price: "₹199",
-        description: "Impress your partner to send this special wish \u{1F92D}.",
+        oldPrice: "₹449",   // ✅ added old price
+        description: "Impress your partner to send this special wish 😍.",
         features: [
-            "High-quality print design",
-            "Durable and long-lasting material",
-            "Perfect for all ages",
-            "Eco-friendly paper",
-            "Replace these Bear images with you and your images ",
-            "Provide Coustomize Code also"
+            "Replace these Bear images with you and your partner images.",
+            "Replace songs with your special songs. ",
+            "High-quality print design.",
+            "Durable and long-lasting material.",  
+            "Perfect for all ages.",
+            "Eco-friendly paper.",
+            "Provide Coustomize Code also. 😉"
         ],
-        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
+        images: ["aniSS.jpg", "aniSS2.jpg", "aniSS3.jpg", "aniSS4.jpg", "aniSS5.jpg", "aniSS6.jpg", "aniSS7.jpg", "aniSS8.jpg"]
     },
      {
         id: 3,
         title: "Anniversery Wish",
         price: "₹199",
-        description: "Impress your partner to send this special wish \u{1F92D}.",
+        oldPrice: "₹449",
+        description: "Impress your partner to send this special wish 😍.",
         features: [
             "High-quality print design",
             "Durable and long-lasting material",
@@ -96,7 +102,8 @@ const products = [
         id: 4,
         title: "Anniversery Wish",
         price: "₹199",
-        description: "Impress your partner to send this special wish \u{1F92D}.",
+        oldPrice: "₹449",
+        description: "Impress your partner to send this special wish 😍.",
         features: [
             "High-quality print design",
             "Durable and long-lasting material",
@@ -111,7 +118,8 @@ const products = [
         id: 5,
         title: "Anniversery Wish",
         price: "₹199",
-        description: "Impress your partner to send this special wish \u{1F92D}.",
+        oldPrice: "₹449",
+        description: "Impress your partner to send this special wish 😍.",
         features: [
             "High-quality print design",
             "Durable and long-lasting material",
@@ -125,7 +133,6 @@ const products = [
 ];
 
 
-
 // Get ID from URL
 const urlParams = new URLSearchParams(window.location.search);
 const productId = parseInt(urlParams.get('id'));
@@ -133,7 +140,10 @@ const product = products.find(p => p.id === productId);
 
 if (product) {
     document.getElementById("productTitle").innerText = product.title;
-    document.getElementById("productprice").innerText = product.price;
+    document.getElementById("newPrice").innerText = product.price;
+    if (product.oldPrice) {
+        document.getElementById("oldPrice").innerText = product.oldPrice;
+    }
     document.getElementById("productDesc").innerText = product.description;
     document.getElementById("mainImage").src = product.images[0];
     document.getElementById("productFeatures").innerHTML =

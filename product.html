@@ -39,13 +39,14 @@
         <ul id="productFeatures" class="list-disc pl-5 mb-6 text-gray-600"></ul>
 
        <div class="flex justify-center gap-[62px] sm:gap-[80px] mt-[12px] sm:mt-[30px]">
-  <button id="addToCartBtn" class="bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded font-bold">
-   <a href="cart.html"> Add to Cart</a>
-  </button>
-  <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded font-bold">
-    <a id="buyNowBtn" href="PaymentPage.html">Buy Now</a>
-  </button>
-</div>
+          <button id="addToCartBtn" 
+                  class="bg-yellow-400 hover:bg-yellow-500 px-6 py-3 rounded font-bold">
+             Add to Cart
+          </button>
+          <button class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded font-bold">
+            <a id="buyNowBtn" href="PaymentPage.html">Buy Now</a>
+          </button>
+       </div>
     </div>
 
 </div>
@@ -56,7 +57,7 @@ const products = [
         id: 1,
         title: "Classic Birthday Wish",
         price: "₹149",
-        oldPrice: "₹299",   // ✅ added old price
+        oldPrice: "₹299",
         description: "A beautiful and elegant birthday wish card to make your loved ones feel special.",
         features: [
             "High-quality print design",
@@ -66,77 +67,27 @@ const products = [
             "Replace these Bear images with you and your images ",
             "Provide Coustomize Code also"
         ],
-        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
+        images: ["indeximg.png", "img2.png", "img3.png", "img4.png"]
     },
-     {
+    {
         id: 2,
         title: "Anniversery Wish",
         price: "₹199",
-        oldPrice: "₹449",   // ✅ added old price
+        oldPrice: "₹449",
         description: "Impress your partner to send this special wish 😍.",
         features: [
             "Replace these Bear images with you and your partner images.",
-            "Replace songs with your special songs. ",
+            "Replace songs with your special songs.",
             "High-quality print design.",
             "Durable and long-lasting material.",  
             "Perfect for all ages.",
-            "Eco-friendly paper.",
-            "Provide Coustomize Code also. 😉"
+            "Eco-friendly paper."
         ],
-        images: ["aniSS.jpg", "aniSS2.jpg", "aniSS3.jpg", "aniSS4.jpg", "aniSS5.jpg", "aniSS6.jpg", "aniSS7.jpg", "aniSS8.jpg"]
-    },
-     {
-        id: 3,
-        title: "Anniversery Wish",
-        price: "₹199",
-        oldPrice: "₹449",
-        description: "Impress your partner to send this special wish 😍.",
-        features: [
-            "High-quality print design",
-            "Durable and long-lasting material",
-            "Perfect for all ages",
-            "Eco-friendly paper",
-            "Replace these Bear images with you and your images ",
-            "Provide Coustomize Code also"
-        ],
-        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
-    },
-     {
-        id: 4,
-        title: "Anniversery Wish",
-        price: "₹199",
-        oldPrice: "₹449",
-        description: "Impress your partner to send this special wish 😍.",
-        features: [
-            "High-quality print design",
-            "Durable and long-lasting material",
-            "Perfect for all ages",
-            "Eco-friendly paper",
-            "Replace these Bear images with you and your images ",
-            "Provide Coustomize Code also"
-        ],
-        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
-    },
-     {
-        id: 5,
-        title: "Anniversery Wish",
-        price: "₹199",
-        oldPrice: "₹449",
-        description: "Impress your partner to send this special wish 😍.",
-        features: [
-            "High-quality print design",
-            "Durable and long-lasting material",
-            "Perfect for all ages",
-            "Eco-friendly paper",
-            "Replace these Bear images with you and your images ",
-            "Provide Coustomize Code also"
-        ],
-        images: ["indeximg.png", "img2.png", "img3.png", "img4.png", "img2.png", "img4.png", "img2.png"]
+        images: ["aniSS.jpg", "aniSS2.jpg", "aniSS3.jpg"]
     }
 ];
 
-
-// Get ID from URL
+// ✅ Get ID from URL
 const urlParams = new URLSearchParams(window.location.search);
 const productId = parseInt(urlParams.get('id'));
 const product = products.find(p => p.id === productId);
@@ -157,10 +108,38 @@ if (product) {
         thumbs += `<img src="${img}" onclick="changeImage('${img}')" class="w-20 h-20 border cursor-pointer object-cover">`;
     });
     document.getElementById("thumbnailContainer").innerHTML = thumbs;
+
+    // ✅ Add to Cart button click
+    document.getElementById("addToCartBtn").addEventListener("click", () => {
+        addToCart(product);
+    });
 }
 
 function changeImage(img) {
     document.getElementById("mainImage").src = img;
+}
+
+// ✅ Fixed addToCart function
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const existing = cart.find(item => item.id === product.id);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push({
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            oldPrice: product.oldPrice,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${product.title} added to cart!`);
+    // Optional: redirect to cart
+    window.location.href = "cart.html";
 }
 </script>
 

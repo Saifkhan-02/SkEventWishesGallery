@@ -31,7 +31,7 @@
 
   <script>
     function renderCart() {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const container = document.getElementById("cartContainer");
 
       if (cart.length === 0) {
@@ -42,7 +42,7 @@
 
       let cartHTML = "";
       cart.forEach((item, index) => {
-        // Default quantity = 1 agar missing ho
+        // quantity fix → agar missing ho to 1 set kar do
         if (!item.quantity || item.quantity < 1) {
           item.quantity = 1;
         }
@@ -59,7 +59,7 @@
               </div>
               <div class="flex items-center gap-2 mt-2">
                 <button onclick="updateQuantity(${index}, -1)" class="px-2 py-1 bg-gray-200 rounded">➖</button>
-                <span>${item.quantity}</span>
+                <span class="font-semibold">${item.quantity}</span>
                 <button onclick="updateQuantity(${index}, 1)" class="px-2 py-1 bg-gray-200 rounded">➕</button>
                 <button onclick="removeItem(${index})" class="ml-4 px-3 py-1 bg-red-500 text-white rounded">Remove</button>
               </div>
@@ -71,21 +71,20 @@
 
       container.innerHTML = cartHTML;
 
-      // Buy Now → pehle product ke liye
+      // Buy Now → first item
       const first = cart[0];
       document.getElementById("buyNowBtn").href =
         `PaymentPage.html?title=${encodeURIComponent(first.title)}&price=${encodeURIComponent(first.price)}&oldPrice=${encodeURIComponent(first.oldPrice)}&quantity=${first.quantity}`;
     }
 
-    // Update quantity
+    // Quantity update
     function updateQuantity(index, change) {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       if (!cart[index]) return;
 
       cart[index].quantity = (cart[index].quantity || 1) + change;
-
       if (cart[index].quantity <= 0) {
-        cart.splice(index, 1); // Remove item if 0
+        cart.splice(index, 1);
       }
 
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -100,7 +99,7 @@
       renderCart();
     }
 
-    // First render
+    // 👇 yeh line missing thi
     renderCart();
   </script>
 
